@@ -113,8 +113,8 @@ class IpnsPublisher {
       if (err) {
         const errMsg = `ipns record for ${key.toString()} could not be stored in the routing`
 
-      log.error(errMsg)
-      return callback(errcode(new Error(errMsg), 'ERR_STORING_IN_DATASTORE'))
+        log.error(errMsg)
+        return callback(errcode(new Error(errMsg), 'ERR_PUTTING_TO_ROUTING'))
       }
 
       log(`ipns record for ${key.toString()} was stored in the routing`)
@@ -151,8 +151,8 @@ class IpnsPublisher {
       if (err) {
         const errMsg = `public key for ${key.toString()} could not be stored in the routing`
 
-      log.error(errMsg)
-      return callback(errcode(new Error(errMsg), 'ERR_STORING_IN_DATASTORE'))
+        log.error(errMsg)
+        return callback(errcode(new Error(errMsg), 'ERR_PUTTING_TO_ROUTING'))
       }
 
       log(`public key for ${key.toString()} was stored in the routing`)

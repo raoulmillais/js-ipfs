@@ -23,20 +23,6 @@ class OfflineDatastore {
    * @returns {void}
    */
   put (key, value, callback) {
-    if (!Buffer.isBuffer(key)) {
-      const errMsg = `key does not have a valid format`
-
-      log.error(errMsg)
-      return callback(errcode(new Error(errMsg), 'ERR_INVALID_KEY'))
-    }
-
-    if (!Buffer.isBuffer(value)) {
-      const errMsg = `received value is not a buffer`
-
-      log.error(errMsg)
-      return callback(errcode(new Error(errMsg), 'ERR_INVALID_VALUE_RECEIVED'))
-    }
-
     // encode key properly - base32(/ipns/{cid})
     const routingKey = new Key('/' + encodeBase32(key), false)
 
@@ -50,13 +36,6 @@ class OfflineDatastore {
    * @returns {void}
    */
   get (key, callback) {
-    if (!Buffer.isBuffer(key)) {
-      const errMsg = `key does not have a valid format`
-
-      log.error(errMsg)
-      return callback(errcode(new Error(errMsg), 'ERR_INVALID_KEY'))
-    }
-
     // encode key properly - base32(/ipns/{cid})
     const routingKey = new Key('/' + encodeBase32(key), false)
 
