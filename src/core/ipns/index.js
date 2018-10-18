@@ -16,12 +16,12 @@ const path = require('./path')
 const defaultRecordTtl = 60 * 1000
 
 class IPNS {
-  constructor (routing, ipfs, pubsub) {
+  constructor (routing, ipfs) {
     this.publisher = new IpnsPublisher(routing, ipfs._repo)
     this.republisher = new IpnsRepublisher(this.publisher, ipfs)
-    this.resolver = new IpnsResolver(routing, ipfs._repo)
+    this.resolver = new IpnsResolver(routing)
     this.cache = new Receptacle({ max: 1000 }) // Create an LRU cache with max 1000 items
-    this.pubsub = pubsub
+    this.routing = routing
   }
 
   // Publish

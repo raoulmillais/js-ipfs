@@ -13,9 +13,8 @@ log.error = debug('jsipfs:ipns:resolver:error')
 const defaultMaximumRecursiveDepth = 32
 
 class IpnsResolver {
-  constructor (routing, repo) {
+  constructor (routing) {
     this._routing = routing
-    this._repo = repo
   }
 
   resolve (name, options, callback) {

@@ -13,13 +13,7 @@ const resolvePath = (ipfsNode, name, callback) => {
   if (isIPFS.ipnsPath(name)) {
     log(`resolve ipns path ${name}`)
 
-    const local = ipfsNode._options.local
-
-    const options = {
-      local: local
-    }
-
-    return ipfsNode._ipns.resolve(name, options, callback)
+    return ipfsNode._ipns.resolve(name, callback)
   }
 
   // ipfs path

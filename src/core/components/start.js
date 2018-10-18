@@ -60,7 +60,7 @@ module.exports = (self) => {
         ipnsStores.push(offlineDatastore)
 
         const routing = new TieredDatastore(ipnsStores)
-        self._ipns = new IPNS(routing, self, pubsubDs)
+        self._ipns = new IPNS(routing, self)
 
         self._bitswap = new Bitswap(
           self._libp2pNode,
