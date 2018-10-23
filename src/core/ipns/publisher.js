@@ -67,7 +67,7 @@ class IpnsPublisher {
 
       let keys
       try {
-        keys = ipns.getIdKeys(peerId.id)
+        keys = ipns.getIdKeys(peerId.toBytes())
       } catch (err) {
         log.error(err)
         return callback(err)

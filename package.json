@@ -90,7 +90,7 @@
     "cids": "~0.5.5",
     "class-is": "^1.1.0",
     "datastore-core": "~0.4.0",
-    "datastore-pubsub": "~0.0.2",
+    "datastore-pubsub": "ipfs/js-datastore-pubsub#feat/encode-record-store-keys",
     "debug": "^4.1.0",
     "deep-extend": "~0.6.0",
     "err-code": "^1.1.2",
