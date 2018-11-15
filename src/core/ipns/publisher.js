@@ -111,6 +111,7 @@ class IpnsPublisher {
     // Add record to routing (buffer key)
     this._routing.put(key.toBuffer(), rec.serialize(), (err, res) => {
       if (err) {
+        console.log('publish entry', err)
         const errMsg = `ipns record for ${key.toString()} could not be stored in the routing`
 
         log.error(errMsg)
@@ -174,8 +175,6 @@ class IpnsPublisher {
     const checkRouting = !(options.checkRouting === false)
 
     this._repo.datastore.get(ipns.getLocalKey(peerId.id), (err, dsVal) => {
-      let result
-
       if (err) {
         if (err.code !== 'ERR_NOT_FOUND') {
           const errMsg = `unexpected error getting the ipns record ${peerId.id} from datastore`
@@ -186,22 +185,28 @@ class IpnsPublisher {
           if (!checkRouting) {
             return callback(null, null)
           } else {
-            // TODO ROUTING - get from DHT
-            return callback(new Error('not implemented yet'))
+            // Try to get from routing
+            let keys
+            try {
+              keys = ipns.getIdKeys(peerId.toBytes())
+            } catch (err) {
+              log.error(err)
+              return callback(err)
+            }
+
+            this._routing.get(keys.routingKey, (err, res) => {
+              if (err) {
+                return callback(err)
+              }
+
+              dsVal = res
+            })
           }
         }
       }
 
-      if (Buffer.isBuffer(dsVal)) {
-        result = dsVal
-      } else {
-        const errMsg = `found ipns record that we couldn't convert to a value`
-
-        log.error(errMsg)
-        return callback(errcode(new Error(errMsg), 'ERR_INVALID_IPNS_RECORD'))
-      }
-
       // unmarshal data
+      let result
       try {
         result = ipns.unmarshal(dsVal)
       } catch (err) {
